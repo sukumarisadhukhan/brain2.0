@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Brain 2.0</title>
 </head>
 
@@ -13,26 +12,43 @@
 
     <p>Your external memory.</p>
 
+    <a href="/tasks/create">
+        <button>Create Task</button>
+    </a>
+
     <h2>Tasks</h2>
 
     {% if tasks %}
 
         <ul>
-            {% for task in tasks %}
-                <li>
-                    <strong>{{ task.title }}</strong>
 
-                    {% if task.deadline %}
-                        <span>
-                            Deadline: {{ task.deadline }}
-                        </span>
-                    {% endif %}
+        {% for task in tasks %}
 
-                    <span>
-                        Priority: {{ task.priority }}
-                    </span>
-                </li>
-            {% endfor %}
+            <li>
+
+                <strong>{{ task.title }}</strong>
+
+                | Priority: {{ task.priority }}
+
+                {% if task.description %}
+                    <br>
+                    {{ task.description }}
+                {% endif %}
+
+                <form
+                    method="POST"
+                    action="/tasks/complete/{{ task.id }}"
+                    style="display:inline;"
+                >
+                    <button type="submit">
+                        Complete
+                    </button>
+                </form>
+
+            </li>
+
+        {% endfor %}
+
         </ul>
 
     {% else %}
