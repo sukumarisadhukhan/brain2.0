@@ -1,61 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Brain 2.0</title>
 </head>
 
 <body>
 
-    <h1>Brain 2.0</h1>
+    <header>
+        <h1>Brain 2.0</h1>
+        <p>Your external memory.</p>
+    </header>
 
-    <p>Your external memory.</p>
 
-    <a href="/tasks/create">
-        <button>Create Task</button>
-    </a>
+    <main>
 
-    <h2>Tasks</h2>
+        <!-- CREATE TASK -->
 
-    {% if tasks %}
+        <section>
+            <a href="/tasks/create">
+                <button type="button">
+                    + Create Task
+                </button>
+            </a>
+        </section>
 
-        <ul>
 
-        {% for task in tasks %}
+        <!-- SMART PRIORITY -->
 
-            <li>
+        <section>
 
-                <strong>{{ task.title }}</strong>
+            <h2>Smart Priority</h2>
 
-                | Priority: {{ task.priority }}
+            {% if ranked_tasks %}
 
-                {% if task.description %}
-                    <br>
-                    {{ task.description }}
-                {% endif %}
+                <ol>
 
-                <form
-                    method="POST"
-                    action="/tasks/complete/{{ task.id }}"
-                    style="display:inline;"
-                >
-                    <button type="submit">
-                        Complete
-                    </button>
-                </form>
+                    {% for task, score in ranked_tasks %}
 
-            </li>
+                        <li>
 
-        {% endfor %}
+                            <strong>
+                                {{ task.title }}
+                            </strong>
 
-        </ul>
+                            <br>
 
-    {% else %}
+                            Brain Score:
+                            <strong>
+                                {{ score }}/100
+                            </strong>
 
-        <p>No tasks yet.</p>
+                            {% if task.deadline %}
+                                <br>
 
-    {% endif %}
+                                Deadline:
+                                {{ task.deadline.strftime(
+                                    "%d %b %Y, %I:%M %p"
+                                ) }}
+                            {% endif %}
+
+                            {% if task.estimated_minutes %}
+                                <br>
+
+                                Estimated time:
+                                {{ task.estimated_minutes }} minutes
+                            {% endif %}
+
+                            {% if task.description %}
+                                <br>
+
+                                Description:
+                                {{ task.description }}
+                            {% endif %}
+
+                            <br><br>
+
+                            <form
+                                method="POST"
+                                action="/tasks/complete/{{ task.id }}"
+                            >
+                                <button type="submit">
+                                    ✓ Complete
+                                </button>
+                            </form>
+
+                        </li>
+
+                        <br>
+
+                    {% endfor %}
+
+                </ol>
+
+            {% else %}
+
+                <p>
+                    No pending tasks.
+                </p>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- SYSTEM STATUS -->
+
+        <section>
+
+            <h2>Brain Status</h2>
+
+            <p>
+                Task memory: Active
+            </p>
+
+            <p>
+                Priority engine: Active
+            </p>
+
+            <p>
+                Reminder engine: Coming soon
+            </p>
+
+            <p>
+                Voice interface: Coming soon
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <hr>
+
+        <p>
+            Brain 2.0 · Voice-first personal operating system
+        </p>
+
+    </footer>
 
 </body>
+
 </html>
