@@ -10,6 +10,11 @@ def create_task(
     estimated_minutes=None,
     priority=3
 ):
+    """Create and save a new task."""
+
+    if deadline:
+        deadline = datetime.fromisoformat(deadline)
+
     task = Task(
         title=title,
         description=description,
@@ -25,16 +30,32 @@ def create_task(
 
 
 def get_all_tasks():
-    return Task.query.order_by(Task.deadline.asc()).all()
+    """Return all tasks, ordered by deadline."""
+
+    return Task.query.order_by(
+        Task.deadline.asc()
+    ).all()
 
 
 def get_pending_tasks():
+    """Return incomplete tasks, ordered by deadline."""
+
     return Task.query.filter_by(
         status="pending"
-    ).order_by(Task.deadline.asc()).all()
+    ).order_by(
+        Task.deadline.asc()
+    ).all()
+
+
+def get_task(task_id):
+    """Return a task by ID."""
+
+    return db.session.get(Task, task_id)
 
 
 def complete_task(task_id):
+    """Mark a task as completed."""
+
     task = db.session.get(Task, task_id)
 
     if task is None:
@@ -43,6 +64,20 @@ def complete_task(task_id):
     task.status = "completed"
     task.completed_at = datetime.utcnow()
 
+    db.session.commit()
+
+    return task
+
+
+def delete_task(task_id):
+    """Delete a task."""
+
+    task = db.session.get(Task, task_id)
+
+    if task is None:
+        return None
+
+    db.session.delete(task)
     db.session.commit()
 
     return task

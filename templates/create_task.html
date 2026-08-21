@@ -14,6 +14,15 @@
 
         <label>Task</label>
         <input type="text" name="title" required>
+        {% if task.deadline %}
+    <br>
+    Deadline: {{ task.deadline.strftime("%d %b %Y, %I:%M %p") }}
+{% endif %}
+
+{% if task.estimated_minutes %}
+    <br>
+    Estimated time: {{ task.estimated_minutes }} minutes
+{% endif %}
 
         <br><br>
 
@@ -32,6 +41,20 @@
         </select>
 
         <br><br>
+        <label>Deadline</label>
+<input type="datetime-local" name="deadline">
+
+<br><br>
+
+<label>Estimated time (minutes)</label>
+<input
+    type="number"
+    name="estimated_minutes"
+    min="1"
+    placeholder="e.g. 120"
+>
+
+<br><br>
 
         <button type="submit">Create Task</button>
 
