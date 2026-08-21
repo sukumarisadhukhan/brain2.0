@@ -130,6 +130,63 @@
             </p>
 
         </section>
+        <section>
+
+    <h2>Today's Plan</h2>
+
+    <p>
+        Available:
+        {{ daily_plan.available_minutes }} minutes
+    </p>
+
+    <p>
+        Planned:
+        {{ daily_plan.total_minutes }} minutes
+    </p>
+
+    <p>
+        Remaining:
+        {{ daily_plan.remaining_minutes }} minutes
+    </p>
+
+
+    {% if daily_plan.tasks %}
+
+        <ol>
+
+            {% for task, score in daily_plan.tasks %}
+
+                <li>
+
+                    <strong>
+                        {{ task.title }}
+                    </strong>
+
+                    <br>
+
+                    {{ task.estimated_minutes or 30 }}
+                    minutes
+
+                    <br>
+
+                    Priority:
+                    {{ score }}/100
+
+                </li>
+
+            {% endfor %}
+
+        </ol>
+
+    {% else %}
+
+        <p>
+            No tasks fit today's available capacity.
+        </p>
+
+    {% endif %}
+
+</section>
 
     </main>
 
