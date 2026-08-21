@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Brain 2.0</title>
+</head>
+
+<body>
+
+    <h1>Brain 2.0</h1>
+
+    <p>Your external memory.</p>
+
+    <h2>Tasks</h2>
+
+    {% if tasks %}
+
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    <strong>{{ task.title }}</strong>
+
+                    {% if task.deadline %}
+                        <span>
+                            Deadline: {{ task.deadline }}
+                        </span>
+                    {% endif %}
+
+                    <span>
+                        Priority: {{ task.priority }}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+
+        <p>No tasks yet.</p>
+
+    {% endif %}
+
+</body>
+</html>
