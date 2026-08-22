@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Identities | Brain 2.0</title>
+</head>
+
+<body>
+
+    <h1>Your Identities</h1>
+
+    <a href="/identities/create">
+        <button>
+            + Add Identity
+        </button>
+    </a>
+
+    <br><br>
+
+
+    {% if identities %}
+
+        {% for identity in identities %}
+
+            <div>
+
+                <h2>
+                    {{ identity.icon or "◉" }}
+                    {{ identity.name }}
+                </h2>
+
+                {% if identity.description %}
+                    <p>
+                        {{ identity.description }}
+                    </p>
+                {% endif %}
+
+                <p>
+                    Tasks:
+                    {{ identity.tasks | length }}
+                </p>
+
+            </div>
+
+            <hr>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>
+            No identities yet.
+        </p>
+
+    {% endif %}
+
+</body>
+
+</html>
