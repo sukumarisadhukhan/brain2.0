@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Create Task | Brain 2.0</title>
 </head>
 
@@ -12,57 +14,161 @@
 
     <form method="POST">
 
-        <label>Task</label>
-        <input type="text" name="title" required>
-        {% if task.deadline %}
-    <br>
-    Deadline: {{ task.deadline.strftime("%d %b %Y, %I:%M %p") }}
-{% endif %}
+        <!-- TITLE -->
 
-{% if task.estimated_minutes %}
-    <br>
-    Estimated time: {{ task.estimated_minutes }} minutes
-{% endif %}
+        <label for="title">
+            Task
+        </label>
+
+        <br>
+
+        <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="What needs to be done?"
+            required
+        >
 
         <br><br>
 
-        <label>Description</label>
-        <textarea name="description"></textarea>
+
+        <!-- DESCRIPTION -->
+
+        <label for="description">
+            Description
+        </label>
+
+        <br>
+
+        <textarea
+            id="description"
+            name="description"
+            placeholder="Optional details"
+        ></textarea>
 
         <br><br>
 
-        <label>Priority</label>
-        <select name="priority">
-            <option value="1">1 - Critical</option>
-            <option value="2">2 - High</option>
-            <option value="3" selected>3 - Normal</option>
-            <option value="4">4 - Low</option>
-            <option value="5">5 - Minimal</option>
+
+        <!-- IDENTITY -->
+
+        <label for="identity_id">
+            Identity
+        </label>
+
+        <br>
+
+        <select
+            id="identity_id"
+            name="identity_id"
+        >
+
+            <option value="">
+                No identity
+            </option>
+
+            {% for identity in identities %}
+
+                <option value="{{ identity.id }}">
+                    {{ identity.icon or "◉" }}
+                    {{ identity.name }}
+                </option>
+
+            {% endfor %}
+
         </select>
 
         <br><br>
-        <label>Deadline</label>
-<input type="datetime-local" name="deadline">
 
-<br><br>
 
-<label>Estimated time (minutes)</label>
-<input
-    type="number"
-    name="estimated_minutes"
-    min="1"
-    placeholder="e.g. 120"
->
+        <!-- DEADLINE -->
 
-<br><br>
+        <label for="deadline">
+            Deadline
+        </label>
 
-        <button type="submit">Create Task</button>
+        <br>
+
+        <input
+            type="datetime-local"
+            id="deadline"
+            name="deadline"
+        >
+
+        <br><br>
+
+
+        <!-- ESTIMATED TIME -->
+
+        <label for="estimated_minutes">
+            Estimated time (minutes)
+        </label>
+
+        <br>
+
+        <input
+            type="number"
+            id="estimated_minutes"
+            name="estimated_minutes"
+            min="1"
+            placeholder="e.g. 60"
+        >
+
+        <br><br>
+
+
+        <!-- PRIORITY -->
+
+        <label for="priority">
+            Priority
+        </label>
+
+        <br>
+
+        <select
+            id="priority"
+            name="priority"
+        >
+
+            <option value="1">
+                1 - Critical
+            </option>
+
+            <option value="2">
+                2 - High
+            </option>
+
+            <option value="3" selected>
+                3 - Normal
+            </option>
+
+            <option value="4">
+                4 - Low
+            </option>
+
+            <option value="5">
+                5 - Minimal
+            </option>
+
+        </select>
+
+        <br><br>
+
+
+        <!-- SUBMIT -->
+
+        <button type="submit">
+            Create Task
+        </button>
 
     </form>
 
     <br>
 
-    <a href="/">Back to Brain 2.0</a>
+    <a href="/">
+        ← Back to Brain 2.0
+    </a>
 
 </body>
+
 </html>
